@@ -11,9 +11,13 @@
 	inputs.home-manager.nixosModules.default
     ];
 
+	#system name
+	system.nixos.label = "RTsway"; 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  	#Boot amd gpu driver
+	boot.initrd.kernelModules = [ "amdgpu" ];
 
   networking.hostName = "nixraf"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -25,13 +29,42 @@
   # Enable networking
   networking.networkmanager.enable = true;
 # Enable Flakes
-nix.settings.experimental-features=["nix-command" "flakes"];
+#nix.settings.experimental-features=["nix-command" "flakes"];
+nix.settings = {
+      experimental-features = "nix-command flakes";
+      auto-optimise-store = true;
+};
+  
+
+#Sway
+programs.sway.enable=true;
 # Sway on Home Manager
 security.polkit.enable=true;
-hardware.opengl.enable=true;
+#hardware.opengl.enable=true;
+hardware = {
+	enableAllFirmware = true;
+    	cpu.amd.updateMicrocode = true;
+    	#bluetooth.enable = true;
+    	opengl = {
+      	enable = true;
+      	driSupport32Bit = true;
+      	driSupport = true;
+      	extraPackages = with pkgs; [
+        amdvlk
+	 #	vulkan-tools
+        #	vulkan-headers
+        #	vulkan-loader
+        #	vulkan-validation-layers
+        #	vulkan-tools-lunarg
+      ];
+    };
+  };
+
   # Set your time zone.
   time.timeZone = "America/Sao_Paulo";
-
+	#Sound
+	sound.enable = true;
+	#hardware.pulseaudio.enable = true;
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -49,6 +82,7 @@ hardware.opengl.enable=true;
 
   # Configure keymap in X11
   services.xserver = {
+	 videoDrivers = ["amdgpu"];
     xkb={
 	layout =lib.mkForce "br";
     	variant =lib.mkForce "nodeadkeys";
@@ -56,7 +90,17 @@ hardware.opengl.enable=true;
   };
 
   # Configure console keymap
-  console.keyMap = "br-abnt2";
+  console={
+	#font="ter-124b";
+	keyMap = "br-abnt2";
+	#packages= with pkgs;[
+	#	terminus_font	
+	#];
+	
+};
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+  ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.raf = {
@@ -82,6 +126,15 @@ home-manager={
 	wget
 	git
   ];
+ # sound.enable = true;
+#  hardware.pulseaudio.enable = false;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # lowLatency.enable = true;
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

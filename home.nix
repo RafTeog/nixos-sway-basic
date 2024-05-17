@@ -36,6 +36,10 @@
     # '')
 	kitty
 	firefox
+	#nwg-look
+    	#qt5ct
+    	#catppuccin-qt5ct
+    	#lxappearance
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -55,13 +59,136 @@
 
 wayland.windowManager.sway={
 	enable=true;
+	wrapperFeatures={
+		gtk=true;
+		base=true;
+	};
+	package=pkgs.sway;
+        #extraPackages=  with pkgs; [
+        #	swaylock swayidle foot dmenu wmenu 
+        #        ];	
 	config = rec {
 	modifier = "Mod4";
 	terminal = "kitty";
 	startup = [
 		{command="firefox";}
 		];
+	bars=[
+		{
+		colors={
+  			background = "#5f676a";
+  			#border = "#333333";
+  			#text = "#ffffff";
+			focusedBackground="#000000";
+			focusedSeparator="#666666";
+			focusedStatusline="#ffffff";
+			separator="#666666";
+			#statusLine="ffffff";
+		};
+		#{activeWorkspace={
+  		#	background = "#000000";
+  		#	border = "#333333";
+  		#	text = "#ffffff";
+		#	};}
+		#{bindingMode={
+ 		#	 background = "#900000";
+  		#	border = "#2f343a";
+  		#	text = "#ffffff";
+		#	};}
+		#{focusedWorkspace={
+ 		#	 background = "#285577";
+  		#	border = "#4c7899";
+  		#	text = "#ffffff";
+		#	};}
+		#{inactiveWorkspace={
+  		#	background = "#222222";
+  		#	border = "#333333";
+  		#	text = "#888888";
+		#};}
+		#{urgentWorkspace={
+  		#	background = "#900000";
+  		#	border = "#2f343a";
+  		#	text = "#ffffff";
+		#};}
+		command="/nix/store/96ryr7v08zmp2xrz62rcq23r8c4wi4sq-sway-1.9/bin/swaybar";
+		hiddenState="show";
+        	mode="dock";
+        	position="top";
+        	statusCommand="/nix/store/c10ircljnj76p4j1wkh9pfyycq10yl4d-i3status-2.14/bin/i3status";
+        	trayPadding=1;
+        	workspaceButtons=true;
+        	workspaceNumbers=true;}
+		];
+	fonts={
+  		names = [ "DejaVu Sans Mono" "FontAwesome5Free" ];
+  		style = "Bold Semi-Condensed";
+  		size = 11.0;
 	};
+	
+	/*colors={
+		background="#ffffff";
+		focused={
+ 			 background = "#285577";
+  			border = "#4c7899";
+  			childBorder = "#285577";
+  			indicator = "#2e9ef4";
+  			text = "#ffffff";
+			};
+		focusedInative={
+ 			 background = "#5f676a";
+  			border = "#333333";
+  			childBorder = "#5f676a";
+  			indicator = "#484e50";
+  			text = "#ffffff";
+			};
+		placeHolder={
+ 			 background = "#0c0c0c";
+  			border = "#000000";
+  			childBorder = "#0c0c0c";
+  			indicator = "#000000";
+  			text = "#ffffff";
+			};
+		
+		unfocused={
+ 			 background = "#222222";
+  			border = "#333333";
+  			childBorder = "#222222";
+  			indicator = "#292d2e";
+  			text = "#888888";
+			};
+		urgent={
+  			background = "#900000";
+  			border = "#2f343a";
+  			childBorder = "#900000";
+  			indicator = "#900000";
+  			text = "#ffffff";
+			};
+				
+	};*/
+	
+
+	defaultWorkspace="workspace number 1";
+	floating={
+		border=2;
+		criteria=[
+  			{
+    			title = "Steam - Update News";
+  			}
+  			{
+    			class = "Pavucontrol";
+  			}
+			];
+		modifier="Mod4";
+		titlebar=true;
+		
+	
+	};
+};
+
+
+
+
+
 	extraConfig=''
 		input "type:keyboard" {
 			xkb_layout br
@@ -70,6 +197,47 @@ wayland.windowManager.sway={
 	'';
 		
 };
+
+
+
+/*gtk = {
+	enable = true;
+	font = {
+      		name = "Cantarell";
+      		size = 11;
+      		package = pkgs.cantarell-fonts;
+    	};
+    	cursorTheme = {
+     	# name = "Bibata-Modern-Ice";
+      		name = "Bibata-Modern-Classic";
+      		size = 24;
+      		package = pkgs.bibata-cursors;
+    	};
+    	iconTheme = {
+      	# name = "Vivid-Dark-Icons";
+      		name = "Papirus-Dark";
+      		package = pkgs.papirus-icon-theme;
+    	};
+
+    	catppuccin = {
+      		enable = true;
+      		accent = "teal";
+      		size = "standard";
+      		tweaks = [ "normal" ];
+      		cursor = {
+        		enable = false;
+        		accent = "teal";
+        		flavour = "macchiato";
+      		};
+    	};
+
+	gtk4.extraConfig = {
+      		gtk-application-prefer-dark-theme = true;
+    	};
+
+};
+*/
+
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
