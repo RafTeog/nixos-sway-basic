@@ -39,6 +39,7 @@ in
 	kitty
 	firefox
 	dmenu
+	swaybg
 	#nwg-look
     	#qt5ct
     	#catppuccin-qt5ct
@@ -75,12 +76,15 @@ wayland.windowManager.sway={
 		modifier = "Mod4";
 		
 		terminal = "kitty";
-		startup = [{always=false; command="firefox";}];
+		startup = [	#{always=false; 
+				#command="firefox";}
+				{command = "swaybg -i $HOME/github/nixos-sway-basic/background.png";}	
+			];
 		down="j";
 		bars=[{	colors={
   			background = "#5f676a";
-			focusedBackground="#5f676a";
-			focusedSeparator="#444444";
+			focusedBackground="#002776";
+			focusedSeparator="#ff2800";
 			#focusedStatusline="#002776";
 			separator="#444444";
 			#statusline="002776";
@@ -287,7 +291,7 @@ wayland.windowManager.sway={
 			};
 		output={
   			HDMI-A-1 = {
-    			bg = "#AABBCC solid_color";
+    			#bg = "#AABBCC solid_color";
   			};
 		};
         	right="l";
