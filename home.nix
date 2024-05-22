@@ -38,8 +38,9 @@ in
     # '')
 	kitty
 	firefox
-	dmenu
+	wmenu
 	swaybg
+	shotman
 	#nwg-look
     	#qt5ct
     	#catppuccin-qt5ct
@@ -256,10 +257,10 @@ wayland.windowManager.sway={
 		"${modifier}+Shift+minus" = lib.mkOptionDefault "move scratchpad";
 		"${modifier}+Shift+q" = lib.mkOptionDefault "kill";
 		"${modifier}+Shift+space" = lib.mkOptionDefault "floating toggle";
-	#"${modifier}+Up" = lib.mkOptionDefault "focus up";
+		#"${modifier}+Up" = lib.mkOptionDefault "focus up";
 		"${modifier}+a" = lib.mkOptionDefault "focus parent";
 		"${modifier}+b" = lib.mkOptionDefault "splith";
-		"${modifier}+d" = lib.mkOptionDefault "exec /nix/store/xs78ggqicsw19yqpacgm3syv996x3p6y-dmenu-5.3/bin/dmenu_path | /nix/store/xs7>";
+		"${modifier}+d" = lib.mkOptionDefault "exec /nix/store/7lylaha3caw87dsxaq6a1nil27dv9kz6-wmenu-0.1.8/bin/wmenu-run";
 		"${modifier}+e" = lib.mkOptionDefault "layout toggle split";
 		"${modifier}+f" = lib.mkOptionDefault "fullscreen toggle";
 		"${modifier}+h" = lib.mkOptionDefault "focus left";
@@ -274,7 +275,7 @@ wayland.windowManager.sway={
 		"${modifier}+w" = lib.mkOptionDefault "layout tabbed";
 		};
 		left="h";
-		menu="\${pkgs.dmenu}/bin/dmenu_path | \${pkgs.dmenu}/bin/dmenu | \${pkgs.findutils}/bin/xargs swaymsg exec --";
+		menu="\${pkgs.wmenu}/bin/wmenu_path | \${pkgs.wmenu}/bin/wmenu | \${pkgs.findutils}/bin/xargs swaymsg exec --";
 		modes={
   			resize = {
     				Down = "resize grow height 10 px";
