@@ -11,15 +11,10 @@
 	inputs.home-manager.nixosModules.default
     ];
 
-	#system name
+	#system boot name
 	system.nixos.label = "RTsway"; 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  	#Boot amd gpu driver
-	boot.initrd.kernelModules = [ "amdgpu" ];
-
-  networking.hostName = "nixraf"; # Define your hostname.
+   
+	networking.hostName = "nixraf"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
