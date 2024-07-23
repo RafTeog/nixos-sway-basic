@@ -3,14 +3,17 @@ let modifier = config.wayland.windowManager.sway.config.modifier;
 in 
 {
 wayland.windowManager.sway={
+	#xdg.configFile."i3status-rust/config.toml".source = /home/raf/.config/i3status-rust/config.toml;
+	checkConfig = false;
 	enable=true;
 	wrapperFeatures={
 		gtk=true;
 		base=true;
 	};
 	xwayland=true;
-	package=pkgs.sway;
-        #extraPackages=  with pkgs; [
+	#package=pkgs.swayfx-unwrapped;
+        package=pkgs.sway;
+	#extraPackages=  with pkgs; [
         	#swayidle foot dmenu wmenu 
         #        ];	
 	config = rec {
@@ -66,7 +69,7 @@ wayland.windowManager.sway={
 			hiddenState="show";
         		mode="dock";
         		position="top";
-        		statusCommand="${pkgs.i3status}/bin/i3status";
+        		statusCommand="${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-default.toml";
         		trayPadding=2;
         		workspaceButtons=true;
         		workspaceNumbers=true;
@@ -222,6 +225,9 @@ wayland.windowManager.sway={
         	#"XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
         	#"XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
 
+		#Screenshot Shotman
+		"${modifier}+p"="exec shotman --capture output";
+
         	"XF86MonBrightnessDown" = "exec brightnessctl set 15%-";
         	"XF86MonBrightnessUp" =  "exec brightnessctl set +15%";
 		};
@@ -265,10 +271,17 @@ wayland.windowManager.sway={
 		workspaceLayout="default";		
 		};
 		extraConfig=''
-			#input "type:keyboard" {
-			#	xkb_layout br
-			#	xkb_variant nodeadkeys
-			#}
+			#shadows enable
+      			#corner_radius 12
+       			#blur_radius 7
+     			#blur_passes 4
+			#default_dim_inactive 0.2
+			#for_window [app_id="wezterm"] blur enable
+			#for_window [app_id="code"] blur enable
+			#for_window [app_id="rofi"] blur enable
+      			#default_border pixel 0px
+      			#default_floating_border none
+      			#titlebar_border_thickness 0
 		'';
 		extraConfigEarly=''
 		'';
@@ -321,7 +334,8 @@ wayland.windowManager.sway={
   				"XCURSOR_SIZE"
 				#"-all"
 				];
-			xdgAutostart=false;	
+			xdgAutostart=true;
+				
 		};
 	};
 
