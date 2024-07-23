@@ -12,11 +12,8 @@
 
   outputs = { self, nixpkgs, ... }@inputs: {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-      	specialArgs = { inherit inputs; 
-		pkgs = import nixpkgs { system = "x86_64-linux"; config.allowUnfree = true;
-		};
-	};
-	 modules = [
+      specialArgs = {inherit inputs;};
+      modules = [
         ./configuration.nix
          inputs.home-manager.nixosModules.default
       ];
