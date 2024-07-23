@@ -8,24 +8,25 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot={
-	initrd ={
-		availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
-  		kernelModules = [ ];
+boot={
+	initrd={
+		availableKernelModules=[ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
+		kernelModules =[ ];
 	};
-  	kernelModules = [ "kvm-amd" "amdgpu" ];
-  	extraModulePackages = [ ];
-  	kernelPackages = pkgs.linuxPackages_zen;
-  	# Bootloader.
-  	loader={
+	kernelModules = ["kvm-amd" "amdgpu" ];
+	extraModulePackages = [ ];
+	kernelPackages = pkgs.linuxPackages_zen;
+	loader={
 		systemd-boot.enable = true;
-  		efi.canTouchEfiVariables = true;
-		};
-  	kernelParams = ["apm=power_off" "acpi=force" "reboot=acpi"];
-
+		efi.canTouchEfiVariables = true;		
 	};
+	kernelParams = ["apm=power_off" "acpi=force" "reboot=acpi" ];
+
+
+};
+
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/71ccf6fb-f283-40a2-b943-57a09b7d738e";
+    { device = "/dev/disk/by-uuid/1222f43c-143c-41d0-a597-464429088aad";
       fsType = "ext4";
     };
 
