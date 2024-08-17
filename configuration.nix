@@ -9,6 +9,8 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
 	inputs.home-manager.nixosModules.default
+	./services.nix
+	./host-options.nix
     ];
 
 	#system boot name
@@ -42,12 +44,12 @@ hardware = {
 	enableAllFirmware = true;
     	cpu.amd.updateMicrocode = true;
     	#bluetooth.enable = true;
-    	opengl = {
-      	enable = true;
-      	driSupport32Bit = true;
-      	driSupport = true;
-      	extraPackages = with pkgs; [
-        amdvlk
+    	graphics = {
+      		enable = true;
+      		enable32Bit = true;
+      	#driSupport = true;
+      		extraPackages = with pkgs; [
+        	amdvlk
 	 #	vulkan-tools
         #	vulkan-headers
         #	vulkan-loader
@@ -58,23 +60,21 @@ hardware = {
   };
 
   # Set your time zone.
-  time.timeZone = "America/Sao_Paulo";
-	#Sound
-	sound.enable = true;
-	#hardware.pulseaudio.enable = true;
+  time.timeZone = config.masterOptions.systemTimezone;
+  #hardware.pulseaudio.enable = true;
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = config.masterOptions.systemLocale;
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "pt_BR.UTF-8";
-    LC_IDENTIFICATION = "pt_BR.UTF-8";
-    LC_MEASUREMENT = "pt_BR.UTF-8";
-    LC_MONETARY = "pt_BR.UTF-8";
-    LC_NAME = "pt_BR.UTF-8";
-    LC_NUMERIC = "pt_BR.UTF-8";
-    LC_PAPER = "pt_BR.UTF-8";
-    LC_TELEPHONE = "pt_BR.UTF-8";
-    LC_TIME = "pt_BR.UTF-8";
+    LC_ADDRESS = config.masterOptions.systemExtraLocale;
+    LC_IDENTIFICATION = config.masterOptions.systemExtraLocale;
+    LC_MEASUREMENT = config.masterOptions.systemExtraLocale;
+    LC_MONETARY = config.masterOptions.systemExtraLocale;
+    LC_NAME = config.masterOptions.systemExtraLocale;
+    LC_NUMERIC = config.masterOptions.systemExtraLocale;
+    LC_PAPER = config.masterOptions.systemExtraLocale;
+    LC_TELEPHONE = config.masterOptions.systemExtraLocale;
+    LC_TIME = config.masterOptions.systemExtraLocale;
   };
 
   # Configure keymap in X11
@@ -83,15 +83,15 @@ hardware = {
 	xserver = {
 	 	videoDrivers = ["amdgpu"];
     		xkb={
-			layout =lib.mkForce "br";
-    			variant =lib.mkForce "nodeadkeys";
+			layout =lib.mkForce config.masterOptions.keyLayout;
+    			variant =lib.mkForce config.masterOptions.keyVariant;
 			};
   		};
 	};
   # Configure console keymap
   console={
 	#font="ter-124b";
-	keyMap = "br-abnt2";
+	keyMap =config.masterOptions.keyMap;
 	#packages= with pkgs;[
 	#	terminus_font	
 	#];
@@ -101,12 +101,17 @@ hardware = {
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
   ];
 
+#to enable vendor fish completions provided by Nixpkgs
+programs.fish.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.raf = {
     isNormalUser = true;
     description = "raf";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
+    shell=pkgs.fish;
+    #ignoreShellProgramCheck = true;
   };
 home-manager={
 	extraSpecialArgs={inherit inputs;};
@@ -126,7 +131,7 @@ home-manager={
 	git
 	pulseaudio
 	discord
-	i3status-rust
+	wl-clipboard
   ];
  # sound.enable = true;
 #  hardware.pulseaudio.enable = false;

@@ -4,6 +4,8 @@ imports =
     [ # Include the results of the hardware scan.
       	./sway.nix
 	./i3status-rust.nix
+	./fish.nix
+	./kitty.nix
     ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -38,7 +40,7 @@ imports =
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-	kitty
+	#kitty
 	firefox
 	wmenu
 	swaybg
