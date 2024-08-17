@@ -39,15 +39,15 @@ programs= {
             			#		format_down = lib.mkDefault "W: down";
           			#	};
         			#};
-        		#"ethernet _first_" = {
-        		#	enable=false; 
-	 		#	position = lib.mkDefault 2;
-          		#	settings = {
+        		"ethernet _first_" = {
+        			enable=true; 
+	 			position = lib.mkDefault 2;
+          			settings = {
             				#format_up = lib.mkDefault "E: %ip (%speed)";
-            		#		format_up = lib.mkDefault "E: (%speed)";
-			#		format_down = lib.mkDefault "E: down";
-          		#	};
-        		#};
+            				format_up = lib.mkDefault "E: (%speed)";
+					format_down = lib.mkDefault "E: down";
+          			};
+        		};
         			#"battery all" = {
         			#	enable=false;  
 				#	position = lib.mkDefault 4;
@@ -56,21 +56,21 @@ programs= {
         			#};
         		"disk /" = {
          			enable=true;
-				position = lib.mkForce 2;
+				position = lib.mkForce 3;
           			settings = { 
 					format = lib.mkForce "%avail"; 
 				};
         		};
         		"load" = {
           			enable=true;
-				position = lib.mkDefault 3;
+				position = lib.mkDefault 4;
           			settings = { 
 					format = lib.mkDefault "%1min"; 
 				};
         		};
         		"memory" = {
           			enable=true;
-				position = lib.mkDefault 4;
+				position = lib.mkDefault 5;
           			settings = {
             				format = lib.mkDefault "%used | %available";
             				threshold_degraded = lib.mkDefault "1G";
@@ -79,7 +79,7 @@ programs= {
         		};
         		"tztime local" = {
           			enable=true;
-				position = lib.mkDefault 5;
+				position = lib.mkDefault 6;
           			settings = { 
 					format = lib.mkDefault "%Y-%m-%d %H:%M:%S"; 
 				};
