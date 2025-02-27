@@ -5,5 +5,6 @@
 -Thanks to (i.e. stole from)<br>
   --1)Understood the flow and basic setup from: https://github.com/Fab1anDev/SwayNix/<br>
   --2)Flakes and home-manager setup from: https://github.com/vimjoyer/flake-starter-config<br>
-
+  <br>
+Next step: set up impermanence
 
